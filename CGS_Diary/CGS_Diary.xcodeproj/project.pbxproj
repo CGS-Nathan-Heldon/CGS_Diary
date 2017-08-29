@@ -15,6 +15,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1A9060191F5397E800960FEB /* CGS_Diary.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CGS_Diary.entitlements; sourceTree = "<group>"; };
 		D85646DD1F4120B500CABFDF /* CGS_Diary.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CGS_Diary.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D85646E01F4120B500CABFDF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D85646E21F4120B500CABFDF /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -54,6 +55,7 @@
 		D85646DF1F4120B500CABFDF /* CGS_Diary */ = {
 			isa = PBXGroup;
 			children = (
+				1A9060191F5397E800960FEB /* CGS_Diary.entitlements */,
 				D85646E01F4120B500CABFDF /* AppDelegate.swift */,
 				D85646E21F4120B500CABFDF /* ViewController.swift */,
 				D85646E41F4120B500CABFDF /* Main.storyboard */,
@@ -96,8 +98,13 @@
 				TargetAttributes = {
 					D85646DC1F4120B500CABFDF = {
 						CreatedOnToolsVersion = 8.3.2;
-						DevelopmentTeam = 6GASZMH22X;
+						DevelopmentTeam = 4JH3UD4MPQ;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.iCloud = {
+								enabled = 0;
+							};
+						};
 					};
 				};
 			};
@@ -263,7 +270,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 6GASZMH22X;
+				DEVELOPMENT_TEAM = 4JH3UD4MPQ;
 				INFOPLIST_FILE = CGS_Diary/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.cgscomputing.NathanHeldon.CGS-Diary";
@@ -276,7 +283,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 6GASZMH22X;
+				DEVELOPMENT_TEAM = 4JH3UD4MPQ;
 				INFOPLIST_FILE = CGS_Diary/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.cgscomputing.NathanHeldon.CGS-Diary";
@@ -304,6 +311,7 @@
 				D85646F11F4120B500CABFDF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
