@@ -21,22 +21,23 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
         
         menuView.layer.shadowOpacity = 1
         menuView.layer.shadowRadius = 6
         menuView.layer.zPosition = 1;
         
         
-        
     }
-
 
     @IBAction func openMenu(_ sender: Any) {
         
         if(menuShowing) {
             
             leadingConstraint.constant = -220
+            
+            UIView.animate(withDuration: 0.1, animations: {
+                self.view.layoutIfNeeded()
+            })
 
         } else {
             leadingConstraint.constant = 0
