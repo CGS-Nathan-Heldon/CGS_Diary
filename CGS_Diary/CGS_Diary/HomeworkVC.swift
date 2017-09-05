@@ -1,19 +1,18 @@
 //
-//  DayVC.swift
+//  HomeworkVC.swift
 //  CGS_Diary
 //
-//  Created by James  on 30/8/17.
+//  Created by James  on 5/9/17.
 //  Copyright © 2017 Nathan Heldon. All rights reserved.
 //
 
 import UIKit
 
-class DayVC: UIViewController {
-    
-    
+class HomeworkVC: UIViewController {
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         // Do any additional setup after loading the view.
     }
 
@@ -21,8 +20,6 @@ class DayVC: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-    
     
 
     /*

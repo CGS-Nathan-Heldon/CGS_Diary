@@ -42,6 +42,7 @@ class ViewController: UIViewController {
             })
 
         } else {
+            
             leadingConstraint.constant = 0
             
             UIView.animate(withDuration: 0.2, animations: {
