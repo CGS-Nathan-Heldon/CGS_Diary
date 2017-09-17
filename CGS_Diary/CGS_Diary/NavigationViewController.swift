@@ -1,31 +1,17 @@
 //
-//  EventsVC.swift
+//  NavigationViewController.swift
 //  CGS_Diary
 //
-//  Created by James  on 5/9/17.
+//  Created by James  on 16/9/17.
 //  Copyright © 2017 Nathan Heldon. All rights reserved.
 //
 
 import UIKit
 
-class EventsVC: UIViewController {
+class NavigationViewController: UIViewController {
 
-    @IBOutlet weak var monBtn: UIButton!
-    @IBOutlet weak var tueBtn: UIButton!
-    @IBOutlet weak var wedBtn: UIButton!
-    @IBOutlet weak var thuBtn: UIButton!
-    @IBOutlet weak var friBtn: UIButton!
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
-        let weekday = Calendar.current.component(.weekday, from: Date())
-        
-        if weekday == 2 {
-            
-        }
- 
 
         // Do any additional setup after loading the view.
     }
@@ -34,6 +20,7 @@ class EventsVC: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
 
     /*
     // MARK: - Navigation
