@@ -22,8 +22,7 @@ class ViewController: UIViewController {
     
     // On app launch, is the menu bar showing
     var menuShowing = false
-    
-    var homeworkTasks = [String]()
+    var homeworkTasks = UserDefaults.standard.stringArray(forKey: "savedHomeworkTasks") ?? [String]()
     let cellReuseIdentifier = "cell"
     
     
@@ -46,6 +45,10 @@ class ViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         
+        checkHomework()
+        tableView.reloadData()
+        
+        // Not sure if needed :tableView.reloadData()
     }
     
     func checkHomework() {
@@ -60,32 +63,54 @@ class ViewController: UIViewController {
             
             newHomeworkBtn.isHidden = true
             self.newHomeworkBtn.alpha = 0
+            
         }
     }
 
     @IBAction func openMenu(_ sender: Any) {
         
-        if(menuShowing) {
+        if (menuShowing == true) {
             
-            leadingConstraint.constant = -220
+            moveMenu(-220, 0.1)
             
-            UIView.animate(withDuration: 0.1, animations: {
-                self.view.layoutIfNeeded()
-            })
+            menuShowing = false
 
         } else {
             
-            leadingConstraint.constant = 0
+            moveMenu(0, 0.2)
             
-            UIView.animate(withDuration: 0.2, animations: {
-                self.view.layoutIfNeeded()
-            })
+            menuShowing = true
             
         }
         
         
-        menuShowing = !menuShowing
+    }
+    
+    func moveMenu(_ inset: Int, _ duration: Float) {
         
+        self.leadingConstraint.constant = CGFloat(inset)
+        
+        UIView.animate(withDuration: TimeInterval(duration), animations: {
+            self.view.layoutIfNeeded()
+        })
+        
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        
+        if (menuShowing == true) {
+            
+            moveMenu(-220, 0.1)
+            
+            menuShowing = false
+        }
+        
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        UserDefaults.standard.set(homeworkTasks, forKey: "savedHomeworkTasks")
         
     }
     
@@ -117,6 +142,8 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             homeworkTasks.remove(at: indexPath.row)
             
             tableView.deleteRows(at: [indexPath], with: .fade)
+            
+            print(homeworkTasks)
             
             checkHomework()
             

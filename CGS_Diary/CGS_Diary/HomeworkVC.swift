@@ -8,8 +8,7 @@
 
 import UIKit
 
-class HomeworkVC: UIViewController {
-    
+class HomeworkVC: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var homeworkInput: UITextField!
     @IBOutlet weak var datePicker: UIDatePicker!
@@ -23,6 +22,8 @@ class HomeworkVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        self.homeworkInput.delegate = self
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -94,11 +95,25 @@ class HomeworkVC: UIViewController {
         let homeVC = navigationVC.topViewController as!ViewController
         newHomeworkTasks.append(contentsOf: homeVC.homeworkTasks)
         homeVC.homeworkTasks = newHomeworkTasks
+        
+        UserDefaults.standard.set(homeVC.homeworkTasks, forKey: "savedHomeworkTasks")
+        
         homeVC.checkHomework()
         homeVC.tableView.reloadData()
         
         // NB: Most recently added homework is first in array, 
         //     except overdue which overtakes it
+        
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return false
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        
+        homeworkInput.resignFirstResponder()
         
     }
     

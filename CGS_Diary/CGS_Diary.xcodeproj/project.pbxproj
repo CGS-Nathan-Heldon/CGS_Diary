@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1A2E83081F6F3A9F00ACF145 /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A2E83071F6F3A9F00ACF145 /* SettingsVC.swift */; };
+		1A2E830A1F709E1300ACF145 /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A2E83091F709E1300ACF145 /* LoginVC.swift */; };
 		1A322CC91F5E21BB00A685BF /* HomeworkVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A322CC81F5E21BB00A685BF /* HomeworkVC.swift */; };
 		1A322CCB1F5E226400A685BF /* EventsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A322CCA1F5E226400A685BF /* EventsVC.swift */; };
 		D85646E11F4120B500CABFDF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D85646E01F4120B500CABFDF /* AppDelegate.swift */; };
@@ -18,6 +20,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1A2E83071F6F3A9F00ACF145 /* SettingsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
+		1A2E83091F709E1300ACF145 /* LoginVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
 		1A322CC81F5E21BB00A685BF /* HomeworkVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeworkVC.swift; sourceTree = "<group>"; };
 		1A322CCA1F5E226400A685BF /* EventsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventsVC.swift; sourceTree = "<group>"; };
 		1A9060191F5397E800960FEB /* CGS_Diary.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CGS_Diary.entitlements; sourceTree = "<group>"; };
@@ -66,8 +70,10 @@
 				1A9060191F5397E800960FEB /* CGS_Diary.entitlements */,
 				D85646E01F4120B500CABFDF /* AppDelegate.swift */,
 				D85646E41F4120B500CABFDF /* Main.storyboard */,
+				1A2E83091F709E1300ACF145 /* LoginVC.swift */,
 				D85646E21F4120B500CABFDF /* ViewController.swift */,
 				1A322CC81F5E21BB00A685BF /* HomeworkVC.swift */,
+				1A2E83071F6F3A9F00ACF145 /* SettingsVC.swift */,
 				1A322CCA1F5E226400A685BF /* EventsVC.swift */,
 				D85646E71F4120B500CABFDF /* Assets.xcassets */,
 				D85646E91F4120B500CABFDF /* LaunchScreen.storyboard */,
@@ -167,8 +173,10 @@
 			files = (
 				1A322CC91F5E21BB00A685BF /* HomeworkVC.swift in Sources */,
 				D85646E31F4120B500CABFDF /* ViewController.swift in Sources */,
+				1A2E830A1F709E1300ACF145 /* LoginVC.swift in Sources */,
 				D85646E11F4120B500CABFDF /* AppDelegate.swift in Sources */,
 				1A322CCB1F5E226400A685BF /* EventsVC.swift in Sources */,
+				1A2E83081F6F3A9F00ACF145 /* SettingsVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
