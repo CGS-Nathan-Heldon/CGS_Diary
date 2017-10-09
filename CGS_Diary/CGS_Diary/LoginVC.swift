@@ -26,11 +26,13 @@ class LoginVC: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var usernameTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     
+    // Close keyboard when return is tapped
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         self.view.endEditing(true)
         return false
     }
     
+    // Close keyboard when background is tapped
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         
         usernameTextField.resignFirstResponder()
