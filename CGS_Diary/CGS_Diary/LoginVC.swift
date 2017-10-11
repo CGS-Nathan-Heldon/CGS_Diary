@@ -10,34 +10,35 @@ import UIKit
 
 class LoginVC: UIViewController, UITextFieldDelegate {
 
+    @IBOutlet weak var logoView: UIImageView!
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var aboutView: UITextView!
+    @IBOutlet weak var loginBtn: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.usernameTextField.delegate = self
-        self.passwordTextField.delegate = self
+        animate()
+        
+    }
+    
+    func animate() {
+        
+        UIView.animate(withDuration: 1.0, delay: 1.0, options: UIViewAnimationOptions.curveEaseIn, animations: {
+            
+            self.logoView.alpha = 1
+            self.titleLabel.alpha = 1
+            self.aboutView.alpha = 1
+            self.loginBtn.alpha = 1
+            
+            
+        }, completion: nil)
         
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
-    }
-    
-    @IBOutlet weak var usernameTextField: UITextField!
-    @IBOutlet weak var passwordTextField: UITextField!
-    
-    // Close keyboard when return is tapped
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        self.view.endEditing(true)
-        return false
-    }
-    
-    // Close keyboard when background is tapped
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        
-        usernameTextField.resignFirstResponder()
-        passwordTextField.resignFirstResponder()
-        
     }
 
     /*

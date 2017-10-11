@@ -6,6 +6,8 @@
 //  Copyright © 2017 Nathan Heldon. All rights reserved.
 //
 
+// Background from: http://www.freepik.com/free-photo/white-crumpled-paper-texture-for-background_1189772.htm
+
 import UIKit
 
 class HomeworkVC: UIViewController, UITextFieldDelegate {
@@ -35,6 +37,7 @@ class HomeworkVC: UIViewController, UITextFieldDelegate {
         
         
         if homeworkInput.text != "" {
+            
             let newHomework = self.homeworkInput.text!
             let newDueDate = self.datePicker.date
             
@@ -47,6 +50,8 @@ class HomeworkVC: UIViewController, UITextFieldDelegate {
             // NB: Most recently added homework is first in array,
             //     except overdue which overtakes it
             
+            homeVC.countdown.invalidate()
+            
             homeVC.homeworkTasks.insert("\(newHomework)", at: 0)
             homeVC.homeworkDueDates.insert(newDueDate, at: 0)
             
@@ -56,9 +61,6 @@ class HomeworkVC: UIViewController, UITextFieldDelegate {
             UserDefaults.standard.set(homeVC.homeworkTasks, forKey: "savedHomeworkTasks")
             UserDefaults.standard.set(homeVC.homeworkDueDates, forKey: "savedHomeworkDueDates")
             
-            // Unsure if needed?:
-            UserDefaults.standard.synchronize()
-            
             homeVC.checkHomework()
             
             homeVC.tableView.reloadData()
@@ -67,13 +69,14 @@ class HomeworkVC: UIViewController, UITextFieldDelegate {
             
             alert("New homework task added!")
             
+            // Clear the textfield
             homeworkInput.text = ""
+            
         } else {
             
             alert("Please enter a homework task.")
             
         }
-        
         
     }
     
