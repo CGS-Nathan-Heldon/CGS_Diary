@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1A2E830A1F709E1300ACF145 /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A2E83091F709E1300ACF145 /* LoginVC.swift */; };
 		1A2E830C1F8CB80800ACF145 /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A2E830B1F8CB80800ACF145 /* SettingsVC.swift */; };
 		1A322CC91F5E21BB00A685BF /* HomeworkVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A322CC81F5E21BB00A685BF /* HomeworkVC.swift */; };
 		1A322CCB1F5E226400A685BF /* EventsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A322CCA1F5E226400A685BF /* EventsVC.swift */; };
@@ -16,11 +15,9 @@
 		D85646E61F4120B500CABFDF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D85646E41F4120B500CABFDF /* Main.storyboard */; };
 		D85646E81F4120B500CABFDF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D85646E71F4120B500CABFDF /* Assets.xcassets */; };
 		D85646EB1F4120B500CABFDF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D85646E91F4120B500CABFDF /* LaunchScreen.storyboard */; };
-		D89E25061F55733F00044834 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D89E25051F55733F00044834 /* CloudKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		1A2E83091F709E1300ACF145 /* LoginVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
 		1A2E830B1F8CB80800ACF145 /* SettingsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
 		1A322CC81F5E21BB00A685BF /* HomeworkVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeworkVC.swift; sourceTree = "<group>"; };
 		1A322CCA1F5E226400A685BF /* EventsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventsVC.swift; sourceTree = "<group>"; };
@@ -32,7 +29,6 @@
 		D85646E71F4120B500CABFDF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D85646EA1F4120B500CABFDF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D85646EC1F4120B500CABFDF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		D89E25051F55733F00044834 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -40,7 +36,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D89E25061F55733F00044834 /* CloudKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -71,7 +66,6 @@
 				D85646E01F4120B500CABFDF /* AppDelegate.swift */,
 				D85646E41F4120B500CABFDF /* Main.storyboard */,
 				1A2E830B1F8CB80800ACF145 /* SettingsVC.swift */,
-				1A2E83091F709E1300ACF145 /* LoginVC.swift */,
 				D85646E21F4120B500CABFDF /* ViewController.swift */,
 				1A322CC81F5E21BB00A685BF /* HomeworkVC.swift */,
 				1A322CCA1F5E226400A685BF /* EventsVC.swift */,
@@ -85,7 +79,6 @@
 		D89E25041F55733F00044834 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				D89E25051F55733F00044834 /* CloudKit.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -122,14 +115,13 @@
 				TargetAttributes = {
 					D85646DC1F4120B500CABFDF = {
 						CreatedOnToolsVersion = 8.3.2;
-						DevelopmentTeam = AB2KU8LMJ5;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.Push = {
-								enabled = 0;
+								enabled = 1;
 							};
 							com.apple.iCloud = {
-								enabled = 1;
+								enabled = 0;
 							};
 						};
 					};
@@ -173,7 +165,6 @@
 			files = (
 				1A322CC91F5E21BB00A685BF /* HomeworkVC.swift in Sources */,
 				D85646E31F4120B500CABFDF /* ViewController.swift in Sources */,
-				1A2E830A1F709E1300ACF145 /* LoginVC.swift in Sources */,
 				D85646E11F4120B500CABFDF /* AppDelegate.swift in Sources */,
 				1A322CCB1F5E226400A685BF /* EventsVC.swift in Sources */,
 				1A2E830C1F8CB80800ACF145 /* SettingsVC.swift in Sources */,
@@ -302,11 +293,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = CGS_Diary/CGS_Diary.entitlements;
-				DEVELOPMENT_TEAM = AB2KU8LMJ5;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = CGS_Diary/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.cgscomputing.IT-Diary";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.cgscomputing.CGS-Diary";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -316,11 +310,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = CGS_Diary/CGS_Diary.entitlements;
-				DEVELOPMENT_TEAM = AB2KU8LMJ5;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = CGS_Diary/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.cgscomputing.IT-Diary";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.cgscomputing.CGS-Diary";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;

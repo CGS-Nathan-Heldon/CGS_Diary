@@ -6,8 +6,6 @@
 //  Copyright © 2017 Nathan Heldon. All rights reserved.
 //
 
-// Background from: http://www.freepik.com/free-photo/white-crumpled-paper-texture-for-background_1189772.htm
-
 import UIKit
 
 class HomeworkVC: UIViewController, UITextFieldDelegate {
@@ -23,6 +21,9 @@ class HomeworkVC: UIViewController, UITextFieldDelegate {
         super.viewDidLoad()
 
         self.homeworkInput.delegate = self
+        
+        // Disable due dates before the current date
+        datePicker.minimumDate = Date()
         
     }
 

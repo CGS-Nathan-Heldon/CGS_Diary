@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SettingsVC: UITableViewController {
+class SettingsVC: UITableViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     @IBOutlet weak var newProfilePic: UIImageView!
     @IBOutlet weak var usernameTextField: UITextField!
@@ -21,7 +21,7 @@ class SettingsVC: UITableViewController {
         
         let navigationVC = self.navigationController!
         let homeVC = navigationVC.viewControllers[navigationVC.viewControllers.count - 2] as! ViewController
-        // NB: System of referencing HomeVC doesn't work when user has tapped to segues at once; e.g Homework and Settings...
+        // NB: System of referencing HomeVC doesn't work when user has tapped to segues at once; e.g Homework var Settings...
 
         
         // Uncomment the following line to preserve selection between presentations
@@ -54,7 +54,7 @@ class SettingsVC: UITableViewController {
         
         if UIImagePickerController.isSourceTypeAvailable(.photoLibrary) {
             let imagePicker = UIImagePickerController()
-            imagePicker.delegate = self as? UIImagePickerControllerDelegate & UINavigationControllerDelegate
+            imagePicker.delegate = self
             imagePicker.sourceType = UIImagePickerControllerSourceType.photoLibrary
             imagePicker.allowsEditing = true
             self.present(imagePicker, animated: true, completion: nil)
@@ -68,7 +68,7 @@ class SettingsVC: UITableViewController {
         
         if UIImagePickerController.isSourceTypeAvailable(.camera) {
             let imagePicker = UIImagePickerController()
-            imagePicker.delegate = self as? UIImagePickerControllerDelegate & UINavigationControllerDelegate
+            imagePicker.delegate = self
             imagePicker.sourceType = UIImagePickerControllerSourceType.camera;
             imagePicker.allowsEditing = false
             self.present(imagePicker, animated: true, completion: nil)
@@ -102,17 +102,18 @@ class SettingsVC: UITableViewController {
             
         }
         
-        
-        let profilePic: UIImage = newProfilePic.image!
-        
-        homeVC.profilePicView.image = profilePic
-        //UserDefaults.standard.set(homeVC.profilePicView.image, forKey: "savedProfilePic")
-        
-        //homeVC.updateProfilePic(image)
-        //homeVC.profilePicView.setNeedsDisplay()
-        
-        
-        print("Profile pic working")
+        // Change user's profile picture
+        if newProfilePic.image != #imageLiteral(resourceName: "defaultProfilePic") {
+            
+            let profilePic: UIImage = newProfilePic.image!
+            
+            homeVC.profilePicView.image = profilePic
+            
+            homeVC.imageDataPNG = UIImagePNGRepresentation(profilePic)
+            
+            UserDefaults.standard.set(homeVC.imageDataPNG, forKey: "savedProfilePic")
+            
+        }
         
     }
     
@@ -129,55 +130,6 @@ class SettingsVC: UITableViewController {
         usernameTextField.resignFirstResponder()
         
     }
-    
-    /*
-     override func viewWillDisappear(_ animated: Bool) {
-     super.viewWillDisappear(animated)
-     
-     let navigationVC = self.navigationController!
-     let homeVC = navigationVC.topViewController as!ViewController
-     
-     homeVC.profilePic = newProfilePic.image
-     
-     homeVC.profilePicBtn.reloadInputViews()
-     
-     print("Working")
-     
-     // UserDefaults.standard.set(homeVC.profilePic, forKey: "savedProfilePic")
-     
-     // NB: Most recently added homework is first in array,
-     //     except overdue which overtakes it
-     
-     }
-     */
-    
-    /*
- 
- // Profile pic not working atm
- @IBAction func submit(_ sender: Any) {
- 
- let navigationVC = self.navigationController!
- let homeVC = navigationVC.viewControllers[navigationVC.viewControllers.count - 2] as! ViewController
- // NB: System of referencing HomeVC doesn't work when user has tapped to segues at once; e.g Homework and Settings...
- 
- let profilePic: UIImage = newProfilePic.image!
- 
- homeVC.profilePicView.image = profilePic
- //UserDefaults.standard.set(homeVC.profilePicView.image, forKey: "savedProfilePic")
- 
- 
- //homeVC.updateProfilePic(image)
- //homeVC.profilePicView.setNeedsDisplay()
- 
- 
- 
- print("Profile pic working")
- 
- }
- 
- // Change user name //
- 
- */
 
     // MARK: - Table view data source
 
