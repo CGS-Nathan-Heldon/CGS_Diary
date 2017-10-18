@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		1A2E830C1F8CB80800ACF145 /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A2E830B1F8CB80800ACF145 /* SettingsVC.swift */; };
 		1A322CC91F5E21BB00A685BF /* HomeworkVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A322CC81F5E21BB00A685BF /* HomeworkVC.swift */; };
-		1A322CCB1F5E226400A685BF /* EventsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A322CCA1F5E226400A685BF /* EventsVC.swift */; };
 		D85646E11F4120B500CABFDF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D85646E01F4120B500CABFDF /* AppDelegate.swift */; };
 		D85646E31F4120B500CABFDF /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D85646E21F4120B500CABFDF /* ViewController.swift */; };
 		D85646E61F4120B500CABFDF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D85646E41F4120B500CABFDF /* Main.storyboard */; };
@@ -20,7 +19,6 @@
 /* Begin PBXFileReference section */
 		1A2E830B1F8CB80800ACF145 /* SettingsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
 		1A322CC81F5E21BB00A685BF /* HomeworkVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeworkVC.swift; sourceTree = "<group>"; };
-		1A322CCA1F5E226400A685BF /* EventsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventsVC.swift; sourceTree = "<group>"; };
 		1A9060191F5397E800960FEB /* CGS_Diary.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CGS_Diary.entitlements; sourceTree = "<group>"; };
 		D85646DD1F4120B500CABFDF /* CGS_Diary.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CGS_Diary.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D85646E01F4120B500CABFDF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -68,7 +66,6 @@
 				1A2E830B1F8CB80800ACF145 /* SettingsVC.swift */,
 				D85646E21F4120B500CABFDF /* ViewController.swift */,
 				1A322CC81F5E21BB00A685BF /* HomeworkVC.swift */,
-				1A322CCA1F5E226400A685BF /* EventsVC.swift */,
 				D85646E71F4120B500CABFDF /* Assets.xcassets */,
 				D85646E91F4120B500CABFDF /* LaunchScreen.storyboard */,
 				D85646EC1F4120B500CABFDF /* Info.plist */,
@@ -166,7 +163,6 @@
 				1A322CC91F5E21BB00A685BF /* HomeworkVC.swift in Sources */,
 				D85646E31F4120B500CABFDF /* ViewController.swift in Sources */,
 				D85646E11F4120B500CABFDF /* AppDelegate.swift in Sources */,
-				1A322CCB1F5E226400A685BF /* EventsVC.swift in Sources */,
 				1A2E830C1F8CB80800ACF145 /* SettingsVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

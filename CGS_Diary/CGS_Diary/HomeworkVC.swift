@@ -10,11 +10,14 @@ import UIKit
 
 class HomeworkVC: UIViewController, UITextFieldDelegate {
     
+    // Outlets for storyboard:
     @IBOutlet weak var homeworkInput: UITextField!
     @IBOutlet weak var datePicker: UIDatePicker!
     
     var overdueTimer = Timer()
+    
     var countdown2: Timer!
+    
     var timeLeft = 0
     
     override func viewDidLoad() {
@@ -32,33 +35,29 @@ class HomeworkVC: UIViewController, UITextFieldDelegate {
         // Dispose of any resources that can be recreated.
     }
     
-    // 'submit' button tapped -> manage new homework 
-    //  to home ViewControler, alerts, countdown...
+    
+    // Manage new homework to home view controller
     @IBAction func InputHomework(_ sender: Any) {
         
-        
+        // If there is text for
+        // the homework task
         if homeworkInput.text != "" {
+            
+            // ViewController referencing:
+            let navigationVC = self.navigationController!
+            let homeVC = navigationVC.viewControllers[navigationVC.viewControllers.count - 2] as! ViewController
             
             let newHomework = self.homeworkInput.text!
             let newDueDate = self.datePicker.date
             
-            print("NewDueDate: \(newDueDate)")
-            
-            
-            let navigationVC = self.navigationController!
-            let homeVC = navigationVC.viewControllers[navigationVC.viewControllers.count - 2] as! ViewController
-            
-            // NB: Most recently added homework is first in array,
-            //     except overdue which overtakes it
-            
+            // Stop timer...
             homeVC.countdown.invalidate()
             
+            // Insert new task and it's due date
             homeVC.homeworkTasks.insert("\(newHomework)", at: 0)
             homeVC.homeworkDueDates.insert(newDueDate, at: 0)
             
-            
-            // homeVC.homeworkDueDates.sort(by: { $0.compare($1) == .orderedDescending }) // Order by date?
-            
+            // Save input
             UserDefaults.standard.set(homeVC.homeworkTasks, forKey: "savedHomeworkTasks")
             UserDefaults.standard.set(homeVC.homeworkDueDates, forKey: "savedHomeworkDueDates")
             
@@ -66,15 +65,17 @@ class HomeworkVC: UIViewController, UITextFieldDelegate {
             
             homeVC.tableView.reloadData()
             
-            homeVC.checkIfOverdue()
+            // Start timer again...
+            homeVC.startCountdownTimer()
+            
+            // Clear the textfield for future inputs
+            homeworkInput.text = ""
             
             alert("New homework task added!")
             
-            // Clear the textfield
-            homeworkInput.text = ""
-            
         } else {
             
+            // If no homework task was inputted,
             alert("Please enter a homework task.")
             
         }
@@ -108,15 +109,5 @@ class HomeworkVC: UIViewController, UITextFieldDelegate {
         homeworkInput.resignFirstResponder()
         
     }
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
     
 }

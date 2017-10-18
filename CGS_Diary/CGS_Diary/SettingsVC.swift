@@ -10,28 +10,19 @@ import UIKit
 
 class SettingsVC: UITableViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
+    // Outlets for storyboard:
     @IBOutlet weak var newProfilePic: UIImageView!
     @IBOutlet weak var usernameTextField: UITextField!
     @IBOutlet weak var homeworkCounterLabel: UILabel!
     @IBOutlet weak var currentHomeworkLabel: UILabel!
-
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         let navigationVC = self.navigationController!
         let homeVC = navigationVC.viewControllers[navigationVC.viewControllers.count - 2] as! ViewController
-        // NB: System of referencing HomeVC doesn't work when user has tapped to segues at once; e.g Homework var Settings...
-
         
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
-        
-        
-        // Set the image view displaying the profile pic to a circle
+        // Form the profile pic into a circle:
         newProfilePic.layer.cornerRadius = newProfilePic.frame.size.width / 2
         newProfilePic.clipsToBounds = true
         
@@ -40,6 +31,7 @@ class SettingsVC: UITableViewController, UIImagePickerControllerDelegate, UINavi
         currentHomeworkLabel.text = "\(homeVC.currentHomeworkCounter)"
         
     }
+    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -48,36 +40,41 @@ class SettingsVC: UITableViewController, UIImagePickerControllerDelegate, UINavi
     
     // Profile image picker - https://stackoverflow.com/questions/41100717/access-to-camera-and-photolibrary //
     
-    // Open photo library for user to select profile pic
     
+    // Open photo library for user to select profile pic
     @IBAction func openPhotos(_ sender: Any) {
         
         if UIImagePickerController.isSourceTypeAvailable(.photoLibrary) {
             let imagePicker = UIImagePickerController()
+            
             imagePicker.delegate = self
             imagePicker.sourceType = UIImagePickerControllerSourceType.photoLibrary
             imagePicker.allowsEditing = true
+            
             self.present(imagePicker, animated: true, completion: nil)
             
         }
         
     }
     
-    // NB: Simulator doesn't allow access to camera
+    // Open camera for user to take profile pic
+    // NB: simulator doesn't allow access to camera
     @IBAction func openCamera(_ sender: Any) {
         
         if UIImagePickerController.isSourceTypeAvailable(.camera) {
             let imagePicker = UIImagePickerController()
+            
             imagePicker.delegate = self
             imagePicker.sourceType = UIImagePickerControllerSourceType.camera;
             imagePicker.allowsEditing = false
+            
             self.present(imagePicker, animated: true, completion: nil)
             
         }
         
     }
     
-    // Controller for user's selected profile pic
+    // Controller for user's selected profile picture
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         
         if let image: UIImage = info[UIImagePickerControllerOriginalImage] as? UIImage  {
@@ -91,7 +88,6 @@ class SettingsVC: UITableViewController, UIImagePickerControllerDelegate, UINavi
         
         let navigationVC = self.navigationController!
         let homeVC = navigationVC.viewControllers[navigationVC.viewControllers.count - 2] as! ViewController
-        // NB: System of referencing HomeVC doesn't work when user has tapped to segues at once; e.g Homework and Settings...
         
         // Change user's display name
         if usernameTextField.text != "" {
@@ -114,6 +110,22 @@ class SettingsVC: UITableViewController, UIImagePickerControllerDelegate, UINavi
             UserDefaults.standard.set(homeVC.imageDataPNG, forKey: "savedProfilePic")
             
         }
+        
+        alert("Changes saved!")
+        
+    }
+    
+    // alert func, takes in message as string
+    func alert(_ message: String) {
+        
+        let alert = UIAlertController(title: title,
+                                      message: message,
+                                      preferredStyle: .actionSheet)
+        let action = UIAlertAction(title: "Dismiss",
+                                   style: .default,
+                                   handler: nil)
+        alert.addAction(action)
+        present(alert, animated: true, completion: nil)
         
     }
     

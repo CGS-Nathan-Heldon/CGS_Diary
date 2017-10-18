@@ -11,7 +11,7 @@ import UserNotifications
 
 class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
-    
+    // Outlets for storyboard:
     @IBOutlet weak var leadingConstraint: NSLayoutConstraint!
     @IBOutlet var tableView: UITableView!
     @IBOutlet weak var newHomeworkBtn: UIButton!
@@ -25,54 +25,53 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     // Hide menu bar
     var menuShowing = false
+    
     let dateFormatter = DateFormatter()
+    
     var imageDataPNG: Data! = nil
     
     var countdown: Timer!
+    
     let cellReuseID = "homeworkCell"
     
     var taskDateDueSoon: Date! = nil
+    
     var taskDueSoon = ""
+    
     var notificationsAllowed = true
     
     var profilePic = UserDefaults.standard.object(forKey: "savedProfilePic") as? Data
     
-    var username = UserDefaults.standard.string(forKey: "savedUsername")
+    var username = UserDefaults.standard.string(forKey: "savedUsername")!
     
     var homeworkTasks = UserDefaults.standard.stringArray(forKey: "savedHomeworkTasks") ?? [String]()
+    
     var homeworkDueDates = UserDefaults.standard.array(forKey: "savedHomeworkDueDates") as? [Date] ?? [Date]()
     
     var homeworkCounter = UserDefaults.standard.integer(forKey: "savedHomeworkCounter")
     
     var currentHomeworkCounter = UserDefaults.standard.integer(forKey: "savedCurrentHomeworkCounter")
     
-    //var homeworkTasks = [String]()
-    //var homeworkDueDates = [Date]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        /*
-        if (self.profilePic != nil) {
-            self.profilePicView.image = profilePic
-            print("Chnaged profile pic")
-        }
-        */
-        
         // Check if a custom profile picture exists
         if UserDefaults.standard.object(forKey: "savedProfilePic") != nil {
             
+            // Set profile picture
             let newImage = UIImage(data: profilePic!)
             profilePicView.image = newImage
             
         }
         
-        if UserDefaults.standard.string(forKey: "savedUsername") == nil {
+        if UserDefaults.standard.string(forKey: "savedUsername") != nil {
             
-            usernameLabel.text = "Welcome!"
+            usernameLabel.text! = "\(String(describing: username))"
             
         }
         
+        // Form profile pic and overlaying button a circle:
         profilePicView.layer.cornerRadius = profilePicView.frame.size.width / 2
         profilePicBtn.layer.cornerRadius = profilePicBtn.frame.size.width / 2
         profilePicView.clipsToBounds = true
@@ -82,33 +81,20 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         menuView.layer.shadowRadius = 6
         menuView.layer.zPosition = 1;
         
-        usernameLabel.text! = "\(String(describing: username))"
-        
         self.dateFormatter.dateStyle = .full
         
         self.dateDisplay.text = self.dateFormatter.string(from: Date())
         
-        // Register the table view cell class and it's reuse id:
-        
-        //self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseID)
-        
-        // Problem: Can't get more than 6 table cells at once (max # displayed in view) ^^
-        
-        //self.tableView.estimatedRowHeight = 818
-        
         self.tableView.delegate = self
         self.tableView.dataSource = self
         
-        checkIfOverdue()
+        // Begin countdown timer for
+        // homework tasks's due date
+        startCountdownTimer()
         
         checkHomework()
         
-        // Following used in debugging to reset UserDefaults/arrays:
-        
-        //homeworkTasks.removeAll()
-        //homeworkDueDates.removeAll()
-        
-        
+        // Request 'push notifications' from user; only asked on first startup
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge], completionHandler: {didAllow, error in
         })
         
@@ -122,125 +108,20 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
     }
     
-    // Checks for overdue tasks, called once with timer repeating while app is open
-    func checkIfOverdue() {
+    // Reloads table date every 60s to manage homework task's due dates,
+    // called just once, with timer repeating while app is open
+    func startCountdownTimer() {
         
-        // Change time interval to 60s or 1min for final build...(?)
-        countdown = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { (timer) in
+        countdown = Timer.scheduledTimer(withTimeInterval: 300, repeats: true) { (timer) in
             
-            let currentDate = Date()
-            
-            // Cycle through homework tasks to identify overdue tasks
-            for i in 0..<self.homeworkDueDates.count {
-                
-                let dueDate = self.homeworkDueDates[i]
-                
-                // If cells are within 6th visible cells
-                    
-                let indexPath = IndexPath(row: i, section: 0) as IndexPath
-                
-                let overdueCell: UITableViewCell = self.tableView.cellForRow(at: indexPath)!
-                
-                //let overdueCell = self.tableView.indexPathsForVisibleRows
-                //let overdueCell = self.tableView.visibleCells.
-                
-                //let overdueCell: UITableViewCell = self.tableView(self.tableView, cellForRowAt: indexPath)
-                
-                print("\(overdueCell)")
-                    
-                    
-                    
-                // TimeLabel to be applied to .subtitle of tasks
-                var timeLabel = ""
-                
-                let calendar = Calendar.current
-                    
-                // Set the day's hours and mins to 00:00 for fair comparison
-                let date1 = calendar.startOfDay(for: currentDate)
-                let date2 = calendar.startOfDay(for: dueDate)
-                    
-                // Difference between current date and homework task's due date
-                let components = calendar.dateComponents([.day], from: date1, to: date2)
-                    
-                // Determine days until homework task is due
-                let timeLeftInDays = components.day!
-                    
-                // If homework task is due today
-                if timeLeftInDays == 0 {
-                
-                    timeLabel = "Today"
-                        
-                }
-                // If homework task is due later
-                if timeLeftInDays >= 1 {
-                
-                timeLabel = "\(timeLeftInDays) days"
-                
-                // If due tomorrow
-                if timeLeftInDays == 1 {
-                            
-                        // Remove last character 's' for singular "1 day"
-                        timeLabel = timeLabel.substring(to: timeLabel.index(before: timeLabel.endIndex))
-                    }
-                }
-                
-                // If homework task is overdue
-                if currentDate >= dueDate {
-                    
-                    print("\(self.homeworkTasks[i]) is overdue")
-                    
-                    // Change cell appearance to indicate overdue task
-                    overdueCell.backgroundColor = UIColor(red: 1, green: 61/252, blue: 57/252, alpha: 1)
-                    overdueCell.textLabel?.textColor = UIColor.white
-                
-                    timeLabel = "Overdue!"
-                        
-                        
-                } else {
-                
-                    // If not overdue, ensure cell's appearance is neutral
-                    overdueCell.backgroundColor = UIColor.white
-                    overdueCell.textLabel?.textColor = UIColor.black
-                
-                    print("\(self.homeworkTasks[i]), \(timeLeftInDays)")
-                        
-                }
-                
-                // Finally, set the cell's subtitle to the days left
-                overdueCell.detailTextLabel?.text = "\(timeLabel)"
-                
-                
-                // If homework task's due date is earlier than previous,
-                // and is not overdue: update value of task due first
-                if self.taskDateDueSoon >= dueDate  && currentDate <= dueDate {
-                    
-                    self.taskDueSoon = self.homeworkTasks[i]
-                    self.taskDateDueSoon = dueDate
-                    
-                }
-                
-                let state = UIApplication.shared.applicationState
-                
-                // If app is closed, and notification condition is true,
-                // Set notification to remind user of overdue task
-                if state == .background && self.notificationsAllowed == true {
-                    
-                    print("APP CLOSED")
-                    
-                    self.reminder(self.taskDateDueSoon, self.taskDueSoon)
-                    
-                    self.notificationsAllowed = false
-                    
-                }
-                
-                
-            }
+            self.tableView.reloadData()
             
         }
         
     }
     
-    // Check if homework array is empty and add faded '+' over tableview
+    // Check if homework array is empty
+    // and add faded '+' over tableview
     func checkHomework() {
         if homeworkTasks.isEmpty {
             
@@ -258,10 +139,14 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             
         } else {
             
+            // else, remove large '+' and
+            // add smaller '+' above tableview
             newHomeworkBtn.isHidden = true
-            newHomeworkBtn.alpha = 0
-            
             moreHomeworkBtn.isHidden = false
+            
+            // No need for animation as
+            // user will never see
+            newHomeworkBtn.alpha = 0
             moreHomeworkBtn.alpha = 1
             
             self.taskDateDueSoon = self.homeworkDueDates[0]
@@ -283,6 +168,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
     }
     
+    
     // Notify user when the most pertinent task is overdue
     func reminder(_ triggerTime: Date, _ taskName: String) {
         
@@ -298,14 +184,18 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
         //let trigger = UNCalendarNotificationTrigger(dateMatching: components, repeats: false)
         
+        // Following only used for testing, remove for final build:
         let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
         let request = UNNotificationRequest(identifier: "overdueTask", content: content, trigger: trigger)
         
+        // Finally, add notifcation request
+        // to notify user of overdue task
         UNUserNotificationCenter.current().add(request, withCompletionHandler: nil)
         
     }
 
-    // Open/close menu when btn is tapped
+    // Open/close menu when 
+    // navigation button is tapped
     @IBAction func openMenu(_ sender: Any) {
         
         if (menuShowing == true) {
@@ -324,7 +214,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
     }
     
-    // moves side-menu with duration and inset as parameter
+    // Func to move side-menu with
+    // duration and inset
     func moveMenu(_ inset: Int, _ duration: Float) {
         
         self.leadingConstraint.constant = CGFloat(inset)
@@ -347,52 +238,122 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
     }
     
+    // -- TableView functions to create and manage cells -- //
     
-
-    // Extension to create and manage tableview and cells
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         currentHomeworkCounter = self.homeworkTasks.count
         
+        // Save number of homework task for counter in settings
         UserDefaults.standard.set(currentHomeworkCounter, forKey: "savedCurrentHomeworkCounter")
         
         return self.homeworkTasks.count
     }
     
+    // Primary area for overdue timer's logic:
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        //let cell: UITableViewCell = self.tableView.dequeueReusableCell(withIdentifier: cellReuseID)!
+        // Get current time for comparisons
+        let currentDate = Date()
         
-        //var cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: cellReuseID, for: indexPath) as UITableViewCell!
-        
-        // NB: 'for: indexPath' causes crash
-        
-        
-        // Workaround for .subtitle style, atm cannot load more than 6 cells (max cells fit in view)
-        //var cell = tableView.dequeueReusableCell(withIdentifier: cellReuseID) as UITableViewCell!
-        
-        //var cell = UITableViewCell(style: UITableViewCellStyle.subtitle, reuseIdentifier: cellReuseID)
-        
+        let i = indexPath.row
         
         let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: cellReuseID)!
         
-        //if indexPath.
+        let dueDate = self.homeworkDueDates[i]
+        
+        let taskName = self.homeworkTasks[i]
+        
+        // TimeLabel to be applied 
+        // to .subtitle of tasks
+        var timeLabel = ""
+        
+        let calendar = Calendar.current
+        
+        // Set the day's hours and mins to 00:00 for fair comparison
+        let date1 = calendar.startOfDay(for: currentDate)
+        let date2 = calendar.startOfDay(for: dueDate)
+        
+        
+        // Difference between current date and homework task's due date
+        let components = calendar.dateComponents([.day], from: date1, to: date2)
+        
+        
+        // Determine days until homework task is due
+        let timeLeftInDays = components.day!
+        
+        
+        // If homework task is due today:
+        if timeLeftInDays == 0 {
             
+            timeLabel = "Today"
             
-            
-        /*
-        if cell == nil {
-            
-            cell = UITableViewCell(style: UITableViewCellStyle.subtitle, reuseIdentifier: cellReuseID)
         }
-        */
         
         
-        cell.textLabel?.text = "\(homeworkTasks[indexPath.row])"
-        //cell?.detailTextLabel?.text = "yeet"
+        // If homework task is due later:
+        if timeLeftInDays >= 1 {
+            
+            timeLabel = "\(timeLeftInDays) days"
+            
+            // and If due tomorrow:
+            if timeLeftInDays == 1 {
+                
+                // Remove last character 's' for singular "1 day"
+                timeLabel = timeLabel.substring(to: timeLabel.index(before: timeLabel.endIndex))
+            }
+        }
+        
+        
+        // If homework task is overdue:
+        if currentDate >= dueDate {
+            
+            // Change cell appearance to indicate overdue task
+            cell.backgroundColor = UIColor(red: 1, green: 61/252, blue: 57/252, alpha: 1)
+            cell.textLabel?.textColor = UIColor.white
+            
+            timeLabel = "Overdue!"
+            
+            
+        } else {
+            
+            // If not overdue, ensure cell's appearance is neutral
+            cell.backgroundColor = UIColor.white
+            cell.textLabel?.textColor = UIColor.black
+            
+        }
+        
+        
+        // If homework task's due date is earlier than previous,
+        // and is not overdue, update value of task due first
+        if self.taskDateDueSoon >= dueDate  && currentDate <= dueDate {
+            
+            self.taskDueSoon = taskName
+            self.taskDateDueSoon = dueDate
+            
+        }
+        
+        let state = UIApplication.shared.applicationState
+        
+        // If app is closed, and notification condition is true,
+        // Set notification to remind user of overdue task
+        if state == .background && self.notificationsAllowed == true {
+            
+            print("APP CLOSED")
+            
+            self.reminder(self.taskDateDueSoon, self.taskDueSoon)
+            
+            self.notificationsAllowed = false
+            
+        }
+        
+        // Finally,
+        // set the cell's text to the task's name
+        // and it's subtitle to the days until due
+        cell.textLabel?.text = "\(taskName)"
+        cell.detailTextLabel?.text = "\(timeLabel)"
         
         return cell
-        
         
     }
     
@@ -408,13 +369,14 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         alert(title: "\(homeworkTasks[indexPath.row])", "Due: \(taskDueDate).")
         
         // Overwrite changed background colour
+        // which was applied when selected
         tableView.reloadData()
         
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         
-        // Delete completed homeworktask
+        // Delete completed homeworktasks
         if editingStyle == .delete {
                 
             homeworkTasks.remove(at: indexPath.row)
@@ -423,19 +385,16 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             tableView.deleteRows(at: [indexPath], with: .fade)
                 
             homeworkCounter += 1
-                
+            
+            // Save all data:
             UserDefaults.standard.set(self.homeworkTasks, forKey: "savedHomeworkTasks")
             UserDefaults.standard.set(self.homeworkDueDates, forKey: "savedHomeworkDueDates")
             UserDefaults.standard.set(self.homeworkCounter, forKey: "savedHomeworkCounter")
-                
+            
+            // Check if homework
+            // array is/isn't empty
             checkHomework()
-                
-            // Invalidate countdown timer for completed task
-            //self.countdown?.invalidate()
             
-            
-        } else if editingStyle == .insert {
-            // add new row :^))
         }
         
     }

@@ -62,27 +62,6 @@ class SettingVC: UIViewController, UIImagePickerControllerDelegate, UINavigation
         picker.dismiss(animated: true, completion: nil);
     }
     
-    /*
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        
-        let navigationVC = self.navigationController!
-        let homeVC = navigationVC.topViewController as!ViewController
-        
-        homeVC.profilePic = newProfilePic.image
-        
-        homeVC.profilePicBtn.reloadInputViews()
-        
-        print("Working")
-        
-        // UserDefaults.standard.set(homeVC.profilePic, forKey: "savedProfilePic")
-        
-        // NB: Most recently added homework is first in array,
-        //     except overdue which overtakes it
-        
-    }
-    */
-    
     // Profile pic not working atm
     @IBAction func submit(_ sender: Any) {
         
