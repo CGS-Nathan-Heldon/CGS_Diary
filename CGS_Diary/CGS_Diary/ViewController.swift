@@ -42,7 +42,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     var profilePic = UserDefaults.standard.object(forKey: "savedProfilePic") as? Data
     
-    var username = UserDefaults.standard.string(forKey: "savedUsername")!
+    var username = UserDefaults.standard.string(forKey: "savedUsername") ?? "Welcome!"
     
     var homeworkTasks = UserDefaults.standard.stringArray(forKey: "savedHomeworkTasks") ?? [String]()
     
@@ -172,20 +172,17 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     // Notify user when the most pertinent task is overdue
     func reminder(_ triggerTime: Date, _ taskName: String) {
         
-        print("yeet")
-        
         let content = UNMutableNotificationContent()
         content.title = "Homework task \(taskName) is overdue!"
         content.subtitle = ""
         content.body = ""
         content.badge = 1
         
-        //let components = Calendar.current.dateComponents([.weekday, .hour, .minute], from: triggerTime)
+        let components = Calendar.current.dateComponents([.weekday, .hour, .minute], from: triggerTime)
         
-        //let trigger = UNCalendarNotificationTrigger(dateMatching: components, repeats: false)
+        // Set time to notify user
+        let trigger = UNCalendarNotificationTrigger(dateMatching: components, repeats: false)
         
-        // Following only used for testing, remove for final build:
-        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
         let request = UNNotificationRequest(identifier: "overdueTask", content: content, trigger: trigger)
         
         // Finally, add notifcation request

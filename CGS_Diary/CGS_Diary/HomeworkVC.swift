@@ -28,6 +28,11 @@ class HomeworkVC: UIViewController, UITextFieldDelegate {
         // Disable due dates before the current date
         datePicker.minimumDate = Date()
         
+        // Close keyboard when screen is tapped
+        let tap = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:)))
+        tap.cancelsTouchesInView = false
+        self.view.addGestureRecognizer(tap)
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -96,18 +101,10 @@ class HomeworkVC: UIViewController, UITextFieldDelegate {
         
     }
     
-    
     // Close keyboard when return button is tapped
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         self.view.endEditing(true)
         return false
-    }
-    
-    // Close keyboard when background is tapped
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        
-        homeworkInput.resignFirstResponder()
-        
     }
     
 }
